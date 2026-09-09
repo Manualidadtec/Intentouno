@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Build a custom Calzetinez sock box." />
+  <title>Calzetinez — Build Your Box</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="announcement">
+    Free shipping on all custom box bundles · Hand-finished organic cotton
+  </div>
+
+  <header class="site-header">
+    <a class="logo" href="#" aria-label="Calzetinez home">
+      Calzet<span>inez</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a href="#catalog">Shop by Style</a>
+      <a href="#materials">Materials</a>
+      <a href="#gifting">Gifting</a>
+      <a href="#story">Our Story</a>
+    </nav>
+
+    <button class="cart-pill" id="cartButton" type="button">
+      Box <span id="headerCount">0</span>
+    </button>
+  </header>
+
+  <main>
+    <section class="trust-strip" aria-label="Customer benefits">
+      <div>♧ <span>Free Shipping in the U.S.</span></div>
+      <div>✓ <span>Guaranteed Comfort &amp; Fit</span></div>
+      <div>▣ <span>Plastic-Free Gift-Ready Packaging</span></div>
+    </section>
+
+    <section class="hero">
+      <p class="eyebrow">THE EVERYDAY ESSENTIAL, ELEVATED</p>
+      <h1>Build your box</h1>
+      <p>
+        Choose your favorite colors and patterns. Mix, match, and save with
+        tiered bundle pricing.
+      </p>
+
+      <div class="filters" id="filters" aria-label="Product filters">
+        <button class="filter active" data-filter="all">All styles</button>
+        <button class="filter" data-filter="crew">Crew socks</button>
+        <button class="filter" data-filter="ankle">Ankle &amp; no-show</button>
+        <button class="filter" data-filter="merino">Merino wool</button>
+        <button class="filter" data-filter="new">New patterns</button>
+      </div>
+    </section>
+
+    <div class="builder-layout">
+      <section class="catalog-section" id="catalog" aria-labelledby="catalogTitle">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">CURATED FOR COMFORT</p>
+            <h2 id="catalogTitle">Pick your pairs</h2>
+          </div>
+          <p class="muted">Each pair is $16 individually</p>
+        </div>
+
+        <div class="product-grid" id="productGrid"></div>
+      </section>
+
+      <aside class="bundle-card" id="bundleCard" aria-labelledby="bundleTitle">
+        <div class="bundle-card-inner">
+          <div class="bundle-heading">
+            <div>
+              <p class="eyebrow">YOUR CUSTOM BOX</p>
+              <h2 id="bundleTitle">Complete your box</h2>
+            </div>
+            <span class="live-dot" aria-label="Live bundle"></span>
+          </div>
+
+          <div class="tier-tabs" role="tablist" aria-label="Bundle size">
+            <button class="tier active" data-tier="5" role="tab">
+              <strong>5 pairs</strong><span>$65</span>
+            </button>
+            <button class="tier" data-tier="6" role="tab">
+              <strong>6 pairs</strong><span>$75</span><em>Save $21</em>
+            </button>
+            <button class="tier" data-tier="9" role="tab">
+              <strong>9 pairs</strong><span>$105</span><em>Best value</em>
+            </button>
+          </div>
+
+          <div class="progress-row">
+            <span id="progressText">0 of 5 pairs added</span>
+            <span id="progressPercent">0%</span>
+          </div>
+
+          <div class="progress-track">
+            <div id="progressBar"></div>
+          </div>
+
+          <div class="box-slots" id="boxSlots" aria-live="polite"></div>
+
+          <p class="bundle-note" id="bundleNote">
+            Add 5 pairs to unlock checkout.
+          </p>
+
+          <button class="checkout-button" id="checkoutButton" disabled>
+            Review box &amp; checkout <span id="checkoutPrice">$65.00</span>
+          </button>
+
+          <button class="clear-button" id="clearButton" type="button">
+            Clear box
+          </button>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div class="mobile-progress" id="mobileProgress">
+    <button id="mobileProgressButton" type="button">
+      <span><strong id="mobileCount">0/5</strong> pairs in your box</span>
+      <span>View box ↑</span>
+    </button>
+  </div>
+
+  <div class="modal-backdrop" id="checkoutModal" hidden>
+    <section
+      class="checkout-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="checkoutTitle"
+    >
+      <button class="modal-close" id="modalClose" aria-label="Close checkout">
+        ×
+      </button>
+
+      <div id="checkoutView">
+        <p class="eyebrow">ALMOST YOURS</p>
+        <h2 id="checkoutTitle">Review your box</h2>
+
+        <div class="order-summary">
+          <div class="summary-head">
+            <span id="summaryTier">5-pair custom box</span>
+            <strong id="summaryTotal">$65.00</strong>
+          </div>
+          <div id="summaryItems"></div>
+          <div class="summary-shipping">
+            <span>Shipping</span><strong>Free</strong>
+          </div>
+        </div>
+
+        <form
+          id="orderForm"
+          action="https://formsubmit.co/terrible_360@mailfence.com"
+          method="POST"
+        >
+          <input type="hidden" name="_subject" value="New Calzetinez Custom Box Order" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="Bundle Tier" id="formTier" />
+          <input type="hidden" name="Selected Sock Breakdown" id="formBreakdown" />
+          <input type="hidden" name="Total Order Cost" id="formTotal" />
+          <input type="hidden" name="Full Address" id="formFullAddress" />
+
+          <div class="form-grid">
+            <label>
+              Full name
+              <input name="Customer Name" required autocomplete="name" />
+            </label>
+
+            <label>
+              Email
+              <input name="Customer Email" type="email" required autocomplete="email" />
+            </label>
+
+            <label class="full-width">
+              Street address
+              <input id="street" required autocomplete="street-address" />
+            </label>
+
+            <label>
+              City
+              <input id="city" required autocomplete="address-level2" />
+            </label>
+
+            <label>
+              State
+              <input id="state" required autocomplete="address-level1" />
+            </label>
+
+            <label>
+              ZIP code
+              <input id="zip" required autocomplete="postal-code" />
+            </label>
+
+            <label>
+              Phone number
+              <input name="Phone Number" type="tel" required autocomplete="tel" />
+            </label>
+
+            <label class="full-width">
+              Gift note / special instructions
+              <textarea name="Gift Note / Special Instructions" rows="3"></textarea>
+            </label>
+          </div>
+
+          <button class="checkout-button" type="submit">
+            Place order · <span id="formButtonTotal">$65.00</span>
+          </button>
+
+          <p class="form-footnote">
+            Your order details will be securely forwarded for fulfillment.
+          </p>
+        </form>
+      </div>
+
+      <div class="success-view" id="successView" hidden>
+        <div class="success-icon">✓</div>
+        <p class="eyebrow">THANK YOU</p>
+        <h2>Order received!</h2>
+        <p>
+          A confirmation has been dispatched to
+          <strong>terrible_360@mailfence.com</strong>.
+        </p>
+        <button class="checkout-button" id="successClose">Continue shopping</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="sr-only" id="liveRegion" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
